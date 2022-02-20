@@ -3,9 +3,16 @@ import "flatpickr/dist/flatpickr.min.css";
 import Notiflix from 'notiflix';
 
 const startButton = document.querySelector("button[data-start]")
-startButton.disabled=true
+// startButton.disabled=true
 
-let msi
+const timerDay = document.querySelector("[data-days]")
+const timerHouers = document.querySelector("[data-hours]")
+const timerMinutes = document.querySelector("[data-minutes]")
+const timerSeconds = document.querySelector("[data-seconds]")
+
+
+
+let msi = null
 const options = {
     enableTime: true,
     time_24hr: true,
@@ -15,24 +22,35 @@ const options = {
         if(options.defaultDate >= selectedDates[0]){
 
             Notiflix.Notify.failure("Please choose a date in the future")
-            startButton.disabled=true
+            // startButton.disabled=true
 
         }else{
-            startButton.disabled=false
+            // startButton.disabled=false
         }
     //   console.log(selectedDates[0].getTime() - options.defaultDate.getTime());
     //   console.log(options.defaultDate.getTime())
     msi = selectedDates[0]-options.defaultDate
-    
-   console.log(convertMs(msi))
+
+    timerDay.textContent = convertMs(msi).days 
+    timerHouers.textContent = convertMs(msi).hours
+    timerMinutes.textContent = convertMs(msi).minutes
+    timerSeconds.textContent = convertMs(msi).seconds
+
 },
   };
-
 
 
 flatpickr("#datetime-picker", options)
 
 startButton.addEventListener("click",()=>{
+    setInterval(()=>{
+   if(timerSeconds.innerHTML >0 || timerSeconds <=60){
+    console.log(timerSeconds.innerHTML-=1)
+    return
+    
+   } 
+
+    }, 1000)
 
 })
 
