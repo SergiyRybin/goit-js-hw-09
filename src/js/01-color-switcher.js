@@ -6,11 +6,20 @@ function getRandomHexColor() {
 const bodyBacground = document.querySelector("body")
 const starBatton = document.querySelector("button[data-start]")
 const stopBatton = document.querySelector("button[data-stop]")
-
+let timer
 // console.log(bodyBacground.style.display = "flex")
 // console.log(bodyBacground.style)
 
-starBatton.addEventListener("click", changeColor)
+starBatton.addEventListener("click", () => {
+  timer = setInterval(changeColor, 1000)
+  starBatton.disabled=true
+})
+
+stopBatton.addEventListener("click",()=>{
+  clearInterval(timer)
+  starBatton.disabled=false
+
+})
 
 function changeColor(){
     bodyBacground.style.backgroundColor = getRandomHexColor()
