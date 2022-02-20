@@ -7,8 +7,7 @@ const bodyBacground = document.querySelector("body")
 const starBatton = document.querySelector("button[data-start]")
 const stopBatton = document.querySelector("button[data-stop]")
 let timer
-// console.log(bodyBacground.style.display = "flex")
-// console.log(bodyBacground.style)
+
 
 starBatton.addEventListener("click", () => {
   timer = setInterval(changeColor, 1000)
