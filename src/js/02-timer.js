@@ -38,24 +38,28 @@ const options = {
 flatpickr("#datetime-picker", options)
 
 
-startButton.addEventListener("click",()=>{
+ startButton.addEventListener("click",()=>{
     startButton.disabled=true
 
-    setInterval(()=>{
+    const x = setInterval(()=>{
         let now =  new Date()
         msi = selected-now
-        console.log(msi)
         timerDay.innerHTML = convertMs(msi).days 
         timerHouers.innerHTML = convertMs(msi).hours
         timerMinutes.innerHTML = convertMs(msi).minutes
         timerSeconds.innerHTML = convertMs(msi).seconds
-        if(msi<0){
-           Notiflix.Notify.failure("Please stop") 
+        if(msi<999){
+            clearInterval(x)
+           Notiflix.Notify.failure("Please stop")
+           startButton.disabled=false
+ 
         }
     }, 1000)
-   
-
 })
+
+function addLeadingZero(value){
+    return String(value).padStart(2, "0");
+}
 
 
 function convertMs(ms) {
@@ -66,13 +70,13 @@ function convertMs(ms) {
     const day = hour * 24;
   
     // Remaining days
-    const days = Math.floor(ms / day);
+    const days = addLeadingZero(Math.floor(ms / day));
     // Remaining hours
-    const hours = Math.floor((ms % day) / hour);
+    const hours = addLeadingZero(Math.floor((ms % day) / hour));
     // Remaining minutes
-    const minutes = Math.floor(((ms % day) % hour) / minute);
+    const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
     // Remaining seconds
-    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+    const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
   
     return { days, hours, minutes, seconds };
   }
