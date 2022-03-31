@@ -7,36 +7,35 @@ const amount = document.querySelector("input[name=amount]")
 
 startButtonPromise.addEventListener("submit", onSubmite)
 
-let counter=0
-
+let position=0;
 
 function createPromise(position, delay) {
-  setInterval(()=>{
-    counter +=1
-    position = counter
-    // firstDelay.valueAsNumber += step.valueAsNumber
-    
-if(counter<=amount.value  ){
+ const x = setInterval(()=>{
+delay+=step.valueAsNumber
+
+    position +=1
+console.log(delay)
+if(position<=amount.value ){
   const shouldResolve = Math.random() > 0.3;
   if (shouldResolve) {
     // Fulfill
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-
+    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
   } else {
     // Reject
-    Notiflix.Notify.failure("❌ Rejected promise ${position} in ${delay}ms")
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-
+    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
   }
-
+}else{
+  clearInterval(x)
 }
-  },delay)
+  }, delay)
+
+
 }
 
 
 function onSubmite(event) {
   event.preventDefault()
-  createPromise(counter, firstDelay.valueAsNumber)
+  createPromise(position, firstDelay.valueAsNumber)
 }
 
 // .then(({ position, delay }) => {
