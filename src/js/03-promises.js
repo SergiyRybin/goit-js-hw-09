@@ -10,26 +10,29 @@ startButtonPromise.addEventListener("submit", onSubmite)
 let position=0;
 
 function createPromise(position, delay) {
- const x = setInterval(()=>{
-delay+=step.valueAsNumber
 
-    position +=1
-console.log(delay)
-if(position<=amount.value ){
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
+  const stepI = step.valueAsNumber
+  const startPoiny = firstDelay.valueAsNumber
+  const finaly = startPoiny+stepI*amount.valueAsNumber
+  for (let i = startPoiny; i <= finaly; i += stepI) {
+    const x = setTimeout(()=>{
+      position +=1
+      delay=i
+      
+      if(position<=amount.value ){
+        const shouldResolve = Math.random() > 0.3;
+        return new Promise(()=>{
+          if (shouldResolve) {
+            // Fulfill
     Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  } else {
-    // Reject
-    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
+          } else {
+            // Reject
+         Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+          }
+        })
+      }else{clearInterval(x)}
+    }, i)
   }
-}else{
-  clearInterval(x)
-}
-  }, delay)
-
-
 }
 
 
@@ -38,10 +41,6 @@ function onSubmite(event) {
   createPromise(position, firstDelay.valueAsNumber)
 }
 
-// .then(({ position, delay }) => {
-//     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//   })
-//   .catch(({ position, delay }) => {
-//     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-//   });
+
+
 
