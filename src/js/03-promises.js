@@ -26,15 +26,13 @@ setTimeout(()=>{
 }
 
 
+
 function onSubmite(event) {
   event.preventDefault()
-
-  const stepI = step.valueAsNumber
+  let stepI = step.valueAsNumber
   let startPoint = firstDelay.valueAsNumber
-  const finaly = startPoint+stepI*amount.valueAsNumber
+  const finaly = startPoint+amount.valueAsNumber*stepI
     for (let i = startPoint; i < finaly; i += stepI) {
-      console.log(finaly)
-
       position +=1
       startPoint = i
       
@@ -47,7 +45,6 @@ function onSubmite(event) {
       });
     }
 }
-
 
 
 
