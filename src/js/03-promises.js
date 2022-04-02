@@ -1,10 +1,6 @@
 import Notiflix from 'notiflix';
 
 const startButtonPromise = document.querySelector("form")
-const firstDelay = document.querySelector("input[name=delay]")
-const step = document.querySelector("input[name=step]")
-const amount = document.querySelector("input[name=amount]")
-let position=0;
 
 startButtonPromise.addEventListener("submit", onSubmite)
 
@@ -29,13 +25,12 @@ setTimeout(()=>{
 
 function onSubmite(event) {
   event.preventDefault()
-  let stepI = step.valueAsNumber
-  let startPoint = firstDelay.valueAsNumber
-  const finaly = startPoint+amount.valueAsNumber*stepI
-    for (let i = startPoint; i < finaly; i += stepI) {
-      position +=1
-      startPoint = i
-      
+
+  let amount = event.currentTarget.elements.amount.valueAsNumber
+  let stepI = event.currentTarget.elements.step.valueAsNumber
+  let startPoint = event.currentTarget.elements.delay.valueAsNumber
+
+  for (let position = 1; position <= amount; position +=1) {
       createPromise(position, startPoint)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
@@ -43,6 +38,9 @@ function onSubmite(event) {
       .catch(({ position, delay }) => {
         Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
+
+      startPoint+=stepI
+
     }
 }
 
